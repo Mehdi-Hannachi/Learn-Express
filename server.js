@@ -1,32 +1,25 @@
-// Require express
 require("dotenv").config({ path: "./config/.env" });
 
 const express = require("express");
 const connectDB = require("./config/connectDB");
 
-// Create local middleware
-
+//Create local middleware
 const logger = (req, res, next) => {
   // if true ===> next
   // if false ===> blocked
-
   true ? next() : res.send("Blocked");
 };
 
-//
-
 const app = express();
 
-// Parse data
+//4- Parse data
 app.use(express.json());
 
+// 2 - Connect data base
 connectDB();
 
+//Apply logger middleware
 app.use(logger);
-
-// Create port
-
-const port = 9000;
 
 // Fake Data =
 let phones = [
@@ -47,7 +40,7 @@ let phones = [
   },
 ];
 
-// Create endpoints
+// 3- Create endpoints (routes)
 
 // GET all phones
 // GET  "/phones"
@@ -62,7 +55,7 @@ app.get("/phones", (req, res) => {
 });
 
 //Add new phone
-// POST "/phones"
+//POST "/phones"
 //@desc : Add new phone
 
 app.post("/phones", (req, res) => {
@@ -115,10 +108,11 @@ app.delete("/phones/:id", (req, res) => {
   }
 });
 
-// Listen
-
-app.listen(port, (err) => {
+//  1 - Run server
+app.listen(process.env.PORT, (err) => {
   err
     ? console.log("Server connection failed", err)
-    : console.log(`Server connected successfully on port ${port} `);
+    : console.log(
+        `The server is running on http://localhost:${process.env.PORT}`
+      );
 });
