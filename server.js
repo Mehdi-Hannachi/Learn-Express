@@ -1,6 +1,8 @@
 // Require express
+require("dotenv").config({ path: "./config/.env" });
 
 const express = require("express");
+const connectDB = require("./config/connectDB");
 
 // Create local middleware
 
@@ -17,6 +19,8 @@ const app = express();
 
 // Parse data
 app.use(express.json());
+
+connectDB();
 
 app.use(logger);
 
