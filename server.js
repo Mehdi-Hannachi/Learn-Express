@@ -2,6 +2,7 @@ require("dotenv").config({ path: "./config/.env" });
 
 const express = require("express");
 const connectDB = require("./config/connectDB");
+const auth = require("./routes/auth");
 
 //Create local middleware
 const logger = (req, res, next) => {
@@ -107,6 +108,8 @@ app.delete("/phones/:id", (req, res) => {
       .json({ msg: " Phone didn't delete", phones, errors: error });
   }
 });
+
+app.use("/user", auth);
 
 //  1 - Run server
 app.listen(process.env.PORT, (err) => {
