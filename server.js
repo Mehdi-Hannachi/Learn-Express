@@ -59,7 +59,7 @@ app.get("/phones", (req, res) => {
 //POST "/phones"
 //@desc : Add new phone
 
-app.post("/phones", (req, res) => {
+app.post("/phones", isAuth(), (req, res) => {
   console.log("1", req.body);
   try {
     let newPhone = { ...req.body, id: Math.random() };
